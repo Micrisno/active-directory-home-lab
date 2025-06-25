@@ -35,6 +35,12 @@ Inspired by [Josh Madakor's tutorial](https://www.youtube.com/watch?v=uq7zjBodZ5
 6. Joined the Windows 10 VM to the domain
 7. Successfully logged in as a created domain user
 
+🖼️ Screenshots
+
+[Client 1 Connect to Active Directory](screenshots/CLIENT1_connected_to_active_directory.png)
+
+[Virtual Box](screenshots/Virtualbox_for_DC_and_CLIENT1.png)
+
 💻 PowerShell Script Sample
 
 You can find the full script in.

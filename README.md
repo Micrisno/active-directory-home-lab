@@ -37,18 +37,29 @@ Inspired by [Josh Madakor's tutorial](https://www.youtube.com/watch?v=uq7zjBodZ5
 
 💻 PowerShell Script Sample
 
-You can find the full script in `/powershell-scripts/add-users.ps1`.
+You can find the full script in.
 
 ```powershell
 # PowerShell script to add multiple users to Active Directory
 Import-Module ActiveDirectory
 
-for ($i = 1; $i -le 10; $i++) {
-    $username = "user$i"
-    $password = ConvertTo-SecureString "Password123!" -AsPlainText -Force
-    New-ADUser -Name $username `
-               -SamAccountName $username `
-               -AccountPassword $password `
-               -Enabled $true `
-               -Path "OU=Users,DC=ad,DC=homelab,DC=local"
+$password = ConvertTo-SecureString $PASSWORD_FOR_USERS -AsPlainText -Force
+New-ADOrganizationalUnit -Name _USERS -ProtectedFromAccidentalDeletion $false
+
+foreach ($n in $USER_FIRST_LAST_LIST) {
+    $first = $n.Split(" ")[0].ToLower()
+    $last = $n.Split(" ")[1].ToLower()
+    $username = "$($first.Substring(0,1))$($last)".ToLower()
+    Write-Host "Creating user: $($username)" -BackgroundColor Black -ForegroundColor Cyan
+    
+    New-AdUser -AccountPassword $password `
+               -GivenName $first `
+               -Surname $last `
+               -DisplayName $username `
+               -Name $username `
+               -EmployeeID $username `
+               -PasswordNeverExpires $true `
+               -Path "ou=_USERS,$(([ADSI]`"").distinguishedName)" `
+               -Enabled $true
 }
+
